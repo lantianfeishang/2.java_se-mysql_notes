@@ -1,0 +1,88 @@
+注释 xxx comment "xxx1"
+表
+建表create table 表名
+int/bigint //+-2,147,483,648
+double (unsigned)//非负数
+score double(4,1)//类比%4.1lf
+varchar(4)/longtext(4) //65,535 
+data(yyyy-MM-dd)
+time(HH-mm-ss)
+year()
+datetime()//年至秒
+重置truncate table 表名
+
+字段
+增alter table 表名 add 字段名 int(改);
+删alter table 表名 drop 字段名
+
+值
+增insert into 表名 (字段名1,2) values (值1,2),(3,4)
+删delete from 表名 where 条件sl
+改update 表名 set 字段1 = 值1,字段2 = 值2 where 条件
+查 全部字段用*
+遍历查询select 字段1,字段2 from 表名;
+分组查询select 字段1,字段2 from 表名 where 条件 group by 字段 having 条件;//字段相同第一个,having限字段,where限字段12
+排序查询select 字段1,字段2 from 表名 where 条件 order by 字段 having 条件 asc/desc;//升序(降序)
+分页查询select 字段1,字段2 from 表名 limit 起始数,索引数;//起始数默认且从0开始(类arr),起始可为0做限数查询
+去重查询select distinct 字段1,字段2 from 表名 where 条件;
+
+约束
+字段增 xxx;
+主键primary key
+顺序auto_increment
+从头顺序auto_increment,unique
+非空not null
+默认default 值
+范围check(条件)
+
+主外键
+增alter table tb1 constraint 自定义名 key(mainTb1) references tb2(wantTb2) (on delete 权限);//后者权限可略
+删alter table tb1 drop foreign 自定义名;
+修改权限alter table an1 add constraint 自定义名 foreign on update 权限 on delete 权限;//分别指代 更新 删除
+权限
+restrict 不允许更改
+cascade 执行子表同步
+set null 执行子表变null
+
+多表联动查询
+建立中间表关联主键
+内部表 无需中间表
+①select * from tb1 , tb2 where tb1.list = tb2.list;
+②select * from tb1 inner join tb2 on tb1.list = tb2.list;
+外连接 左连接 左含
+select * from tb1 left outer join tb2 on tb1.list = tb2.list;
+自连接 可套外连接 别名型
+select * from tb,t1 , tb,t2 where t1.list1 = t2.list2;
+并集 删除all去重 索引字符需相同
+select ...
+union all
+select ...
+嵌套查询
+标量式 = > < <>
+select * from tb1 where main1 = (select main2 from tb2 where 条件);
+列式 (not) in any some all //any=some
+select * from tb1 where list1 > all (select list2 from tb2);
+行式 = <> (not) in
+
+事务 开始到成败为一个单位
+起始
+①select @@autocommit;
+set @@autocommit=0;
+②start transaction;
+结尾
+commit;//成功提交
+rollbback;//错误回滚
+
+三大事务问题
+①多次修改同一值
+②同时读取修改前后的值
+③同时查与改
+
+事务级别
+查看select @@transaction_isolation;
+设置set session transaction isolation lavel 级别;
+级别
+read umcommitted ①②③
+read committed ②③
+repeatable read ③默认
+serializable 不允许

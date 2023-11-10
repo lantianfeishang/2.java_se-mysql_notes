@@ -1,0 +1,445 @@
+定义
+整型int/long;
+小数double
+字符char
+字符串string
+布尔boolean
+海涵Object
+
+换行\r\n
+回行\t
+
+输入
+Scanner sc = new Scanner(System.in);
+整数int a=sc.nextInt();
+小数sc.nextDouble()
+字符串sc.next()
+
+输出
+System.out.printf("%d",a); d lf c s
+%05.2f 三整二小，补足0补足(可略),5列(选),.2二小数(选)
+
+运算
+0Bxxx二进制
+0xxx八进制
+0X十六进制
++ - * / %余
+++ --
+与&& 或|| 非! 异或^
+Math.pow(2,2);//方，输出带一小数
+Math.abs();//绝对值
+Math.ceil();//向上取整
+Math.floor();//向下取整
+Math.round();//四舍五入
+Math.max();//最大值
+Math.min();//最小值
+Math.random();//随机[0.0,1.0)
+高精运算
+BigDecimal bigA = BigDecimal.valueOf(douA);
+double douA = a.doubleValue(bigA);
+BigDecimal c =a.add(b);加
+BigDecimal c =a.substract(b);减
+BigDecimal c =a.multiply(b);乘
+BigDecimal c =a.divide(b,3,RoundingMode.HALF_UP);除，小数位，四舍五入。后二者可略
+删除.ROUND_DOWN
+向上取整.ROUND_UP
+四舍五入.ROUND_HALF_UP
+五舍六入.ROUND_HALF_DOWN
+
+随机 [0,1)
+Random r = new random;
+int i =r.nextInt();
+r.nextDouble;
+
+字符
+123 + "a" = 220 //字符相加
+"a" + "b" //字符串相加
+String a;
+a.length();//字符串长度
+a.charAt(0);字符提取
+a.substring(0,);//字符串提取
+a.equals("xxx");//判断相等
+a.equalsIgnoreCase("xxx");//忽略大小写判断相等
+a.replace(old,new);//替换
+a.contain("xxx");//判断包含
+a.startWith("xxx");//判断开头
+String b[]=a.split("xxx");//截断，不包含
+int b=a.indexOf("ab",3);//坐标；从第四位开始，可略，不存在返回最大值
+it.remove("xxx");//删除a,it放并发
+a.toString//输出 否则输出变量地址
+
+高级字符串
+StringBuild str =new StringBuild("xxx1","xxx2");
+StringJoiner str = new StringJoiner(",","[","]");//模板 后二为首位可略
+str.length();
+str.append(4).append("hi wo").append(hi);//拼接
+str.reverse();//反转
+
+Object
+Object.equals(a,b);//地址 非空 判断
+Object.isNull(a);
+Objcet.nonNull(a);
+
+转换
+Integer.parseInt(str);// N1 -> N2 
+N a = N.valueOf(Integer/long/double/String);// N1 -> 对象N2
+N b = a;//拆箱 对象 -> int/long/double/String
+
+四神
+if(?){}
+else if(?){}
+else{}
+
+switch(?){
+case :break;
+case :break;
+default:break;
+}
+
+for(int i= ;?;i++){;}
+
+while(?){}
+
+静态数组
+N arr[]={1,2,3};
+N arr[]= new int[3];
+改
+arr[0]=
+Array.sort(arr);//顺序
+Arrays.setAll(arr,new IntToDoubleFunction(){ //以乘二为例
+@Override
+public double applyAsDouble(int value){
+return arr[value]*2;
+}
+});
+查
+=a[0]
+=Array.copyOfRange(arr,0,3);左闭右开
+Arrays.toString(arr);
+Arrays.copyOf(arr,10);//补足尾用0
+arr.length;
+
+大动态数组
+数据类型 Integer Long Double Character String
+数组Array
+ArrayLsit<N> arr = new ArrayList<>(); 
+集合Collection
+LinkedList<N> list = new LinkedList<>();有序可重复有索引
+TreeSet<N> set = new TreeSet<>();排序不重复无索引
+
+Map 重复重置 无索引
+Map<N,N> a = new HashMap<>();N可是数组
+HashMap无序
+LinkedHashMap有序
+TreeMap顺序
+TreeMap改逆序
+Map<Integer,String> a = new TreeMap<>((o1,o2)->Double.compare(o2.getHeight(),o1.getHeight()));
+
+数组/Map
+增
+bigArr.add("xxx");//末尾
+bigArr.add(0,"xxx");//特位
+map.put(123,null);
+map.putAll(map2);
+addFirst(list,"...");
+addLast(list,"...");
+Collections.addAll(list/set,1,2,3);//可输入数组
+删
+bigArr.remove(0);//特位,返回值
+bigArr.remove("xxx");//第一个特值,返回true
+map.remove(0);//特位 返回键
+map.remove("xxx",123);//精准 返回true或false
+map.clear();
+list.removeFirst();
+list.removeLast();
+改
+bigArr.set(0,"xxx");//并返回原值
+Arrays.sort(bigArr);//顺序
+map.put(123,null);
+Collections.shuffle(list);//打乱
+Collections.sort(list);//升序
+Array.sort(arr);//升序 改降序看 排序 自定义
+Arrays.setAll(bigArr,new IntToDoubleFunction(){ //以乘二为例
+@Override
+public double applyAsDouble(int value){
+return arr[value]*2;
+}
+});
+Object arr[] = list.toArray();
+String arr[] = list.toArray(new String[list.size()]);//集合转数组
+Collection<N> list = new ArrayList<>();//数组转集合
+Set<String> set = map.keySet();键转数组
+Collection<Integer> coll = map.values();值转数组
+Set<Map.Entry<Integer,String>> set = map.entrySet();//对转
+mapNew.putAll(mapOld);
+查
+Array.toString(bigArr);
+bigArr.get(0);
+bigArr.isEmpty("xxx");
+bigArr.contains();
+Arrays.copyOf(arr,10);//补足尾用0
+Arrays.copyOfRange(bigArr,0,4);//静态数组,左闭右开
+Arrays.toString(bigArr);//静态字符串数组
+bigArr.size();
+map.get(key);//无返回null
+map.isEmpty(key/value);
+map.containsKey("xxx");
+map.containsValue("xxx");
+map.size();
+getFirst(list,"...");
+getLast(list,"...");
+
+排序
+冒泡
+for(int i=0;i<arr.length-1;i++){
+for(int j=0;j<arr.length-1-i;j++){
+if(arr[j]>arr[j+1]){int temp=arr[j];arr[j]=arr[j+1];arr[j+1]=temp;}
+}
+}
+选择
+for(int i=0;i<arr.length-1;i++){
+for(int j=i+1;j<arr.length;j++){
+if(arr[j]>arr[i]){int temp=arr[j];arr[j]=arr[i];arr[i]=temp;}
+}
+}
+自定义
+Array.sort(arr);//数组
+public class arr implements Comparable<arr>{ //对象
+@Override
+public int compareTo(arr o){return this.Object-o.Object;}
+}//升序 double见下 Object是对象变量
+或
+Arrays.sort(arr,new Comparator<arr>(){
+@Override
+public int compare(arr o1,arr o2){
+return Double.compare(o1.getObject(),o2.getObject());
+}//double比较,int/long与上同 getObject构造器
+});//字符(串首字母)比较o1.compareToIgnoreCase(o2)忽略大小写
+
+函数
+全局局部 public/private
+最终 final //必须赋 不被继承/重写
+
+对象
+独生
+新建对象类
+public class Obj{
+N a,b;//属于各对象
+private N c;//属于对象类
+//普通方法
+public void an(N a){System.out.println("a");}
+//构造器 变量需属于对象类 以 类.getset 调用
+public void getObj(N c){this c=c;}
+public N setObj(){return c;}
+//对象方法 以 类.an 调用
+public static void an(N a){System.out.println("a");}
+}
+public class main(){
+Obj obj = new Obj();
+obj.a=
+Obj.an(123);
+Obj.getobj(123);
+obj.setobj();
+}
+
+多态
+父类(子类) 名 =new 子类();//左变量，右方法
+An instanceof Bn;//方法类型是否相等
+Son FatherNew = (Son) FatherOld;//强转
+
+泛型 前为后泛型赋型
+E 大数组元素
+T class
+K map键
+V map值
+N 数值类型/方法/对象
+
+继承 多层单继承 父类需有无参 子类默认调用父类默认无参
+Son= Father的public(非static) + Son定义构成
+Father方法重写 不重写,会用父同类方法
+public class Son extends Father{
+@Override
+public void a(){;}
+}
+空 此方法//就近原则
+this此类//可值同名方法
+super父类 super();默认存在无参可改有参
+
+抽象 继承子代需重写抽象方法
+public absract class/N A();//抽象class内可写方法
+
+接口 可多接口 抽象继承
+public interface A(){;}//变量、方法默认抽象,default为普通,static为普通静态
+public void C implements A,B{}//AB共有一个default必重写
+
+匿名内部类 改继承
+Father useSon = new Father(){
+@Override
+public void use(){内容;}
+}
+Lambda简化 单抽象方法 接口
+无参式
+interface Father{void use();}
+Father useSon =()->{内容;};
+useSon.use();
+单参数式
+Arrays.setAll(arr,value->{return arr[value]*2;});
+多参数式
+Arrays.sort(arr,(o1,o2)->{return o1.getObject(),o2.getObject();});
+单内容
+Arrays.setAll(arr,value->arr[value]*2);
+Arrays.sort(arr,(o1,o2)->o1.getObject(),o2.getObject());
+方法引用简化 改Lambda 单方法 方法参数与变量同类型
+静态方法
+Arrays.sort(arr,compareNew::compareNew1);
+public class compareNew{
+public static int compareNew1 (arr o1,arr o2){return o1.getObject()-o2.getObject();}}
+实例方法
+compareNew compare = new compareNew();
+Arrays.sort(arr,compare::compareNew2);
+public class compareNew{
+public int compareNew2 (arr o1,arr o2){return o1.getObject()-o2.getObject();}}
+特定类型方法 以静态数组为例
+Arrays.sort(arr,String::compareToIgnoreCase);
+构造器
+public class main{
+psvm(String[] args){
+likeMap lm = Map::new;！！
+Map m = lm.create("a",4.0);
+}
+}
+interface likeMap{
+Map create(String key,double value);
+}
+public class Use{
+private String key;
+private double value;
+public Map(String key,double value){
+this.key=key;
+this.value=value;
+}
+}
+
+遍历
+Collection
+迭代器
+Iterator<String> it = coll.iterator();
+while(it.hasNext()){System.out.println(it.next());}每next顺位,hasNext时it才更新
+增强for 静态/bigArr
+for(String ele : coll){System.out.println(ele);}
+Lambda
+coll.forEach(System.out::println);输出
+Map
+Map<String,Double> map = new HashMap();//可换任意map
+键与值
+Set<String> keys = map.keySet();
+for(String key: keys){System.out.println(map.get(key));}
+键值对
+Set<Map.Entey<String,Double>> entries = map.entrySet();
+for(Map.Entey<String,Double> entry : entries){System.out.println(entry.getKey()+entey.getValue());}
+Lamdba
+map.forEach((k,v)->System.out.println(k+v));
+
+枚举 改对象
+public enum Bn(){
+X,Y,Z //为final
+private a;
+}
+public class An(){
+Bn use = Bn.X;
+Bn[] use = Bn.value();//全部对象
+Bn use = Bn.valueOf("Z");
+use.a;//改setA();
+use.ordinal();//其final
+}
+
+抽象枚举
+public enum Bn(){//默认存在无参Bn(){}
+X(){//可改有参
+@Override
+public void use(){;}
+}
+public abstract void use();
+}
+
+程序进程
+Runtime r=Runtime.getRuntime();
+byte a = r.availableProcessors();//处理器数
+r.totalMemory()/1024;//总内存kb
+r.freeMemory()/1024;//可用内存kb
+r.exec(路径);//程序启动
+p.destroy();//程序关闭
+Thread.sleep(5000);//进程延迟5s
+System.currentTimeMillis();//此刻与世界协调时之差ms
+
+时间 变量皆final
+计算机时间
+LocalDateTime ld = LocalDateTime.now();//此刻年月日时分秒纳秒
+LocalDateTime ld = LocalDateTime.of(yyyy,MM,dd,HH,mm,ss);指定 LocalData LocalTime只定义前后
+LocalData ld/LocalTime lt = ldt.toLocalData();拆
+LocalDateTime ldt = LocalDateTime.of(ld,lt);合
+LocalDateTime ldNew = ld.getYear();得 MonthValue DayOfMonth月日 DayOfYear年日  DayOfWeek().getvalue星期 Hour Minute Second Nano
+LocalDateTime ldNew = ld.withYear(xxxx);改 除无DayOfWeek同get
+LocalDateTime ldNew = ld.plusYear(int);加减 minus 除Days外 即get+s
+ld.equlas(idNew);判断 isAfter isBefore
+时区时间
+ZoneId zone = ZoneId.systemDefault();
+ZoneId zone = ZoneId.of(时区);
+zone.getId();//时区地点
+Zone.getAvailableZoneIds();//全部时区
+ZoneDataTime.now(zone);//六大时间+时区
+ZoneDateTime time = ZoneDateTime.now(Clock.systemUTC());//世界标准时
+ZoneDataTime.now();//默认时区
+time.plusYear() equals;//与上同
+时间戳 可做时间差
+Instant now = Instant.now();//yyyy-MM-ddTHH:mm:ss.SSSZ
+long second = now.getEpochSecond();//1970-1-1至今总秒数
+int nano = now.getNano();//补足纳秒
+now.plusYear() equals;与上同
+格式化时间
+DataTimeFormatter formatter = DataTimeFormatter.ofPattren("yyyy年MM月dd日 HH:mm:ss");
+LocalDataTime now =LocalDataTime.now();//上三皆可
+String rs = formatter.format(now);
+String rs = now.format(formatter);//格式化
+LocalDataTime.parse(rs,formatter);//解析
+时间间隔
+Period period = Period.between(ldtStrat,ldtEnd);
+period.getYears();//年间隔 剩余Months 剩余Days
+Duration duration = Duration.between(ldtStrat,ldtEnd);
+duration.toDays();//天间隔 Hours Minutes Seconds Millis Nanos
+
+正则表达式 []单个
+str.matches("正则表达式");判断
+[abc]//abc中单个
+^ //否
+[a-zA-Z0-9]//全部字母数字单个
+[a-z&[^bc]]//除bc外小写单个
+[a-z|{2}]//小写或2
+(a)+(b)+//至少一个a与至少一个b
+. //任意
+\\d //所有数字 \\D
+\\s //空格 \\S
+\\w //字符数字下划线 \\W
+w? //0或1次
+w* //0或多次
+w+ //1或多次
+w{3} //3次
+w{3,} //3或多次
+((?i)abc) //abc忽略大小写
+((?i)a)bc //a忽略大小写
+() | () 或
+搜索
+String regex="正则表达式";
+Pattren pattren= Pattren.compile(regex);
+Matcher match = pattren.matcher(str);
+while(matcher.find()){String rs =matcher.group();}
+替换
+str.replaceAll("正则表达式","new");(.)\\1+,$1 去重
+str.spilt("正则表达式");
+
+异常
+try{;}catch(Exception e){e.printStackTrace();}finally{;}
+无论如何，都会进入finally
+class thows Exception{;}//抛给上级
+自定义
+public void use{if(?){;}else{throw new Exception("问题");}}

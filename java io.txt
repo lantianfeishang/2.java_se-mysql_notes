@@ -1,0 +1,193 @@
+IO流 可用mysql平替
+File f = new File("路径D://或D:/或D:\\"或"D:"+File.separator+"...");//无盘符，在项目文件下找
+f.exists();判断路径是否存在
+f.isFile();判断是否是文件
+f.isDirectory();判断是否是文件夹
+f.getName();返回文件(夹)名称，文件包含后缀名
+f.length();//文件 文件夹本身字节数 不存在时为0
+f.lastModified();
+SimpleDateFormat sdf = new  SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+sdf.format(time)文件(夹)最后修改时间
+f.getPath();//(创建)路径
+f.getAbsolutePath();//绝对路径
+f.createNewFile();创建文件 成功返回true否则
+f.mkdir();创建一级文件夹 成功返回true否则 多级亦创一级
+f.mkdirs();创建多级文件夹 成功返回true否则
+f.delete();删除文件(夹) 成功返回true否则 不可删除非空文件夹
+String[] names =f.list();获取一级文件夹内所有文件名 若路径为文件则返回null 空文件夹数组为空
+File[] files = f.listFiles();获取一级文件夹内所有文件路径 若路径为文件则返回null 空文件夹数组为空 隐藏文件返回文件夹与文件路径 无权限时返回null
+
+字符集
+ascII 0xxxxxxx
+GBK ascII扩展 1xxxxxxx 0xxxxxxx
+UTF-8 英数一字节0xxxxxxx 汉字三字节1110xxxx 10xxxxx 10xxxxx
+
+原始流 字节流均不用 用字符缓冲
+字节输入流 可文件图片
+InputStream a = new FileInputStream(("路径"));//连接
+byte[] buffer= new byte[1024*64];//1kb桶,多余覆盖,读多少打印多少
+int b = a.read();//下一个字节数据，空为-1
+int b = a.read(buffer);//下n(上为3)个数据字节
+String str = new String(a,"GBK",2);//以GBK解码(默认UTF-8,亦0);输出前n(上为2)位,可略
+a.readAllBytes();//读取所有字节转为字节数组
+a.close();关闭
+
+字节输出流
+OutputStream os = new FileOutputStream("路径");//覆盖式
+OutputStream os = new FileOutputStream("路径",true);//追加式
+byte[] byte=str.getBytes("GBK");//以GBK(默认UTF-8)获得字符集数组 编码
+os.write(97);//输出字节
+os.write(b,0,15);//UTF-8解码,输出前15位
+
+应用 小文件 复制
+try(
+InputStream is = new FileInputStream("路径1"); //自动a.close()
+OutputStream os = new FileOutputStream("路径2");){
+byte[] buffer = new byte[1024*64];
+int len;
+while((len = is.read(buffer)) != -1){os.write(buffer,0,len);}catch(IOException e){
+e.printStackTrace();}finally{}//无论异常,return,一定finally区
+
+字符输入流
+Reader fr = new FileReader(路径);//连接
+fr.read();//整字符读取(默认为0),空为-1
+
+字符输出流
+Writer fw = new FileWriter(路径);//覆盖式,true追加式
+fw.write(a/97/中,0,5);输出,以GBK(默认UTF-8)获得n(此为5)字符
+fw.flush();//刷新 此后数据才生效
+fw.close();//关闭并刷新
+
+应用
+try(Reader fr = new FileReader(路径);
+Writer fw = new FileWriter(路径);){
+char[] buffer = new char[3];//可做集合
+int len;
+while((len = fr.read(buffer)) != -1){
+fw.write(buffer,0,len);
+fw.close();}
+}catch(Exception e){e.printStackTrace();
+}
+
+缓冲流 包装原始流
+字节缓冲输入流
+InputStream is = new FileInputStream(路径);
+InputStream bis = new BufferedInputStream(is);
+
+字节缓冲输出流
+OutputStream os = new FlieOutputStream(路径);
+OutputStream bos = new BufferedOutputStream(os);
+bis.read(buffer);
+
+应用
+try(InputStream is = new FileInputStream(路径);
+InputStream bis = new BufferedInputStream(is);
+OutputStream os = new FlieOutputStream(路径);
+OutputStream bos = new BufferedOutputStream(os,8192*2);)
+byte[] buffer = new byte(1024*64);
+int len;
+while((len = bis.read(buffer)) != -1){
+bos.write(buffer,0,len);}}catch(Exception e){
+e.printStackTrace();}
+
+字符缓冲输入流
+Reader fr = new FileReader(路径);
+BufferedReader br =new BufferedReader(fr);
+br.readLine();//空则null
+
+字符缓冲输出流
+Writer fw = new FileWriter(路径);
+BufferedWriter bw = new BufferedWriter(fw);
+bw.newLine();//换行
+
+应用
+try(Reader fr = new FileReader(路径);
+BufferedReader br =new BufferedReader(fr);
+Writer fw = new FileWriter(路径);
+BufferedWriter bw = new BufferedWriter(fw);){
+String line;
+while((line = br.readLine()) != null){System.out.line(line);}}catch(Exception e){
+e.printStackTrace();}}
+或 排序1.2.
+try(BufferedReader br = new BufferedReader(new FileReader(路径));
+BufferedWriter bw = new BufferedWriter(new FileWriter(路径));){
+List<String> data = new ArrayList<>();
+String line;
+while((line = br.readLine()) !=  null){data.add(line);}
+Collection.sort(data);
+for(String ln : data){
+bw.write(ln);
+bw.newLine();}}catch(Exception e){e.printStackTrace();}
+
+转换流 打印流平替
+字符输入转换流
+InputStream is = new FileInputStream(路径);
+Reader isr = new InputStreamReader(is,"GBK");//转成GBK
+
+三项联合应用
+try(InputStream is = new FileInputStream(路径);
+Reader isr = new InputStreamReader(is,"GBK");
+BufferedReader br = new BufferedReader(isr);){
+String line;
+while((line = br.readLine()) != null){
+System.out.println(line);}
+}catch(Exception e){
+e.printStackTrace();}
+
+字符输出转换流
+OutputStream os = new FileOutputStream(路径);
+Write osw = new OutputStream(os,"GBK");//转成GBK
+BufferedStream bw = new BufferedWriter(osw);
+
+打印流
+PrintWriter ps = new PrintWriter(路径,Charset.forName("GBK"));//转换可略
+ps.println('a'/"abc"/4.5/true);
+System.setOut(ps);//改打印位置
+System.out.println();//输出至上位置
+
+数据流
+数据输出流
+DataOutputStream dos = new DataOutputStream(new FileOutputStream(路径));
+dos.writeInt();Double/UTF <-字符串
+
+数据输入流
+DataInputStream dis = new DataInputStream(new FileInputSteam(路径));
+int a = dis.readInt();Double/UTF <-字符串
+Ststem.out.println(a);
+
+序列化流
+对象字节输出流
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(路径));
+
+应用
+try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(路径));){
+ArrayList arr = new ArrayList();//ArrayList无需Serializable接口直接序列化
+oos.writeObject(arr);}catch(Exception e){
+e.printStackTrace();}
+
+class ArrayList implements Serializable{
+private transient int a;//不序列化}
+
+对象字节输入流
+ObjectInputStream ois = new ObjectInputStream(new FileInputStream(路径));
+ois.readObject();//数组输入
+
+应用
+try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(路径));
+){
+ArrayList arr = (ArrayList) ois.readObject();}catch(Exception e){
+e.printStackTrace();}
+
+class ArrayList{};
+
+拓展
+Files.copy(Path.of(原路径),Path.of(新路径));
+System.out.println(Files.readString(Path.of(路径)));
+
+接入io库
+IO框架
+FileUtils.copyFile(new File(原路径),new File(新路径));
+FileUtils.copyDirectory(new File(原路径),new File(新路径));
+FileUtile.deleteDirectory(new File(路径));
+readFileToString(new File(路径),"GBK");
+writeStringToString(new File(路径),"GBK",8);

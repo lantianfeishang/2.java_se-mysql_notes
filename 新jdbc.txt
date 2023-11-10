@@ -1,0 +1,128 @@
+导包
+file -> project structure -> project settings -> Libraries 导jdbc包
+创文件
+Package
+Resource Bundle
+user=root
+password=ltz673718601
+url=jdbc:mysql://localhost:3306/test
+driverClass=com.mysql.cj.jdbc.Driver
+三大代码
+public static Connection getConnection() throws Exception {
+        InputStream is =ClassLoader.getSystemClassLoader().getResourceAsStream("jdbc.properties");
+        Properties pros = new Properties();
+        pros.load(is);
+        String user = pros.getProperty("user");
+        String password = pros.getProperty("password");
+        String url = pros.getProperty("url");
+        String driverClass = pros.getProperty("driverClass");
+        Class.forName(driverClass);
+        Connection conn = DriverManager.getConnection(url,user,password);
+        return conn;
+    }
+//关闭
+    public void closeResource(Connection conn, Statement ps){
+        try {
+            if(ps != null)
+                ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            if(conn != null)
+                conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+//增删改
+public void withUpdate(String sql,Object  ...args) {
+        Connection conn = null;
+    PreparedStatement ps =null;
+        try {
+            conn = getConnection();
+ ps = conn.prepareStatement(sql);
+for(int i = 0;i < args.length;i++){
+    ps.setObject(i+1,args[i]);
+}
+ps.execute();}
+        catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            closeResource(conn,ps);
+        }}
+    public void mainUpdate(){
+        String sql="insert into mysql表名(id,name,time)values (?,?,?)";//增
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//时间
+        java.util.Date date = sdf.parse("2005-01-01");
+        withUpdate(sql,"1","蓝天",new java.util.Date(date.getTime()));
+
+        String sql="delete from mysql表名 where id =?";//删
+        withUpdate(sql,3);
+
+        String sql="update mysql表名 set name = ? where id = ?";//改
+        withUpdate(sql,"蓝天","1");
+    }
+
+查
+//关闭
+public void closeResource(Connection conn,Statement ps,ResultSet rs){
+    try {
+        if(ps != null)
+            ps.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    try {
+        if(conn != null)
+            conn.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    try {
+        if(rs != null)
+            rs.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+public void queryCustomers(){
+        String sql="select id,name,time from mysql表名 where id = ?";
+        withQueryCustomers(sql,13);
+        sql="select name from mysql表名 where id= ?";//即可同时查也可个别查
+        withQueryCustomers(sql,13);
+    }
+public io withQueryCustomers(String sql,Object...args){
+    Connection conn=null;
+    PreparedStatement ps=null;
+    ResultSet rs=null;
+    try {
+        conn = getConnection();
+ ps = conn.prepareStatement(sql);
+for (int i=0;i<args.length;i++){
+    ps.setObject(i+1,args[i]);
+}
+rs =ps.executeQuery();
+
+ResultSetMetaData rsmd =rs.getMetaData();
+int columnCount = rsmd.getColumnCount();
+if(rs.next()){
+    io cust = new io();
+    for (int i=0;i<columnCount;i++){
+        Object columnVulue = rs.getObject(i+1);
+        String columnName = rsmd.getColumnName(i+1);
+
+        Field field = io.class.getDeclaredField(columnName);
+        field.setAccessible(true);
+        field.set(cust,columnVulue);
+
+    }
+    return cust;
+}}
+catch (Exception e){
+    e.printStackTrace();
+}finally {
+    closeResource(conn,ps,rs);
+}
+return null;
+}
